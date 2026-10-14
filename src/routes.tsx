@@ -1,5 +1,5 @@
-import { useEffect, useState } from "react";
-import { Link, createBrowserRouter, useParams } from "react-router";
+import { useEffect, useState } from "react"
+import { Link, createBrowserRouter, useParams } from "react-router"
 import {
   ArrowRight,
   ArrowUpRight,
@@ -10,79 +10,116 @@ import {
   Linkedin,
   Mail,
   Rocket,
-} from "lucide-react";
+} from "lucide-react"
 
-const iconProps = { size: 16, strokeWidth: 1.5, "aria-hidden": true } as const;
+const iconProps = { size: 16, strokeWidth: 1.5, "aria-hidden": true } as const
 
 type Project = {
-  title: string;
-  description: string;
-  tags: string[];
-  index: string;
-  slug: string;
-  image?: string;
-  featured?: boolean;
-};
+  title: string
+  description: string
+  tags: string[]
+  index: string
+  slug: string
+  image?: string
+  inset?: string
+  featured?: boolean
+}
 
 const projects: Project[] = [
+  {
+    title: "Ichiban Kuji Platform",
+    description:
+      "Online ichiban kuji inside LINE: point top-ups and prize shipping, peel-to-reveal draw effects, and live ticket pools synced through Firebase RTDB. Built at CatchOpz as the sole frontend engineer for the storefront and admin console.",
+    tags: ["Payments & Shipping", "Draw Effects", "Firebase RTDB"],
+    index: "01",
+    slug: "ichiban-kuji-platform",
+    image: "/ichiban-kuji-platform.png",
+    featured: true,
+  },
+  {
+    title: "PhotoPacer",
+    description:
+      "Marathon photo marketplace where runners find their photos by bib number. I founded it and built it end to end: S3 multipart uploads, Rekognition bib detection, watermarking and Taiwan-local payments.",
+    tags: ["Full-stack", "AWS", "Payments"],
+    index: "02",
+    slug: "photopacer",
+    image: "/photopacer-albums.jpg",
+    featured: true,
+  },
   {
     title: "PAÑPURI",
     description:
       "Immersive LINE mini-app campaign for a Thai luxury wellness brand: a six-step animated climb ending in a personalized, shareable result card.",
     tags: ["CSS Animation", "LINE Mini App", "3D Transforms"],
-    index: "01",
+    index: "03",
     slug: "panpuri",
     image: "/panpuri-home.png",
     featured: true,
   },
   {
-    title: "Tiffany & Co. / BVLGARI Thailand",
+    title: "BVLGARI Thailand LINE E-Shop",
     description:
-      "Multilingual Thai/English e-commerce sites, built for a Thai marketing agency.",
+      "Built at CatchOpz for a Thai marketing agency running BVLGARI’s LINE e-shop in Thailand.",
     tags: ["Next.js", "i18n", "E-commerce"],
-    index: "02",
-    slug: "tiffany-bvlgari-thailand",
-  },
-  {
-    title: "PhotoPacer",
-    description:
-      "Marathon photo marketplace with bib-number detection and integrated payments.",
-    tags: ["Full-stack", "AWS", "Payments"],
-    index: "03",
-    slug: "photopacer",
-  },
-  {
-    title: "LifeBook",
-    description:
-      "AI-powered life stories transformed into knowledge cards and timelines.",
-    tags: ["Next.js", "AI"],
     index: "04",
-    slug: "lifebook",
+    slug: "tiffany-bvlgari-thailand",
+    image: "/tiffany-bvlgari-thailand.png",
+  },
+  {
+    title: "Winston’s Winter Wonderland",
+    description:
+      "Harry Winston holiday campaign in LINE: explore an illustrated map, collect jewels, then sign and share a postcard. Built at CatchOpz as the sole frontend engineer.",
+    tags: ["LINE LIFF", "Campaign Web App", "React"],
+    index: "05",
+    slug: "harry-winston-winter-wonderland",
+    image: "/harry-winston-winter-wonderland.png",
   },
   {
     title: "AI Smart City Hackathon 2026",
     description:
       "AI-assisted land appraisal workbench for New Taipei City, built as frontend lead.",
     tags: ["React", "Leaflet", "AWS Amplify"],
-    index: "05",
+    index: "06",
     slug: "ai-smart-city-hackathon-2026",
+    image: "/ai-smart-city-hackathon-maps.png",
+    inset: "/ai-smart-city-hackathon-boundary.png",
   },
-];
+  {
+    title: "FunBike Station POS",
+    description:
+      "Scan-first POS for New Taipei’s riverside bike rental stations: queued returns, split payments and live SOS alerts. Built at CatchOpz with two other frontend engineers.",
+    tags: ["POS", "Next.js", "Firebase FCM"],
+    index: "07",
+    slug: "funbike",
+    image: "/funbike-rental.png",
+    inset: "/funbike-inventory.png",
+  },
+]
 
 type CaseStudy = {
-  title?: string;
-  summary?: string;
-  role?: string;
-  stack?: string[];
-  year: string;
-  context: string;
-  challenge: string[];
-  approach: [string[], string[], string[]];
-  outcome: string[];
-  metrics: { value: string; label: string }[];
-  demoVideoId?: string;
-  heroScreens?: { src: string; alt: string }[];
-};
+  title?: string
+  summary?: string
+  role?: string
+  stack?: string[]
+  year: string
+  context: string
+  challenge: string[]
+  approach: [string[], string[], string[]]
+  outcome: string[]
+  metrics: { value: string, label: string }[]
+  // Playable build linked from the hero; note explains how it differs from production.
+  liveDemo?: { url: string, note: string }
+  demoVideoId?: string
+  // Set for landscape videos; portrait (9 / 16) is the default.
+  demoVideoAspectRatio?: string
+  heroScreens?: { src: string, alt: string }[]
+  // Full-width screenshot shown before the demo video and last approach paragraphs.
+  featureImage?: { src: string, alt: string, caption: string }
+  // Screenshot shown between the first and second approach paragraphs.
+  detailImage?: { src: string, alt: string, caption: string }
+  // 16:9 YouTube clip shown in place of detailImage.
+  detailVideo?: { id: string, title: string, caption: string }
+}
 
 const caseStudies: Record<string, CaseStudy> = {
   panpuri: {
@@ -92,9 +129,15 @@ const caseStudies: Record<string, CaseStudy> = {
       "PAÑPURI wanted a campaign for its Thai LINE audience that people could step into rather than scroll past: a guided “climb” in which each user signs a personal pledge, answers reflective prompts, and leaves with a keepsake they want to share. The experience had to run inside LINE’s in-app browser, identify users through their LINE accounts, and turn the ending into distribution: share to Facebook or Instagram, or send a postcard that brings a friend into the same journey.",
     ],
     approach: [
-      ["I owned the frontend: I translated the designer’s Figma into all eight screens, the six-step journey state machine, the screenshot-and-share pipeline, the LIFF postcard flow, and the v2 redesign. I integrated with a REST API built by a backend teammate."],
-      ["I treated the journey as a single page with a step state machine instead of separate routes, so one background image could “camera-pan” up the mountain using CSS background-size/background-position transitions. That gave the ascent a continuous feel without one large asset per screen."],
-      ["I chose native CSS scroll-snap over fullpage.js for the swipe-to-choose “camera roll”, and sized layouts from a JS-measured --app-height variable because 100vh is unreliable inside LINE’s in-app browser."],
+      [
+        "I owned the frontend: I translated the designer’s Figma into all eight screens, the six-step journey state machine, the screenshot-and-share pipeline, the LIFF postcard flow, and the v2 redesign. I integrated with a REST API built by a backend teammate.",
+      ],
+      [
+        "I treated the journey as a single page with a step state machine instead of separate routes, so one background image could “camera-pan” up the mountain using CSS background-size/background-position transitions. That gave the ascent a continuous feel without one large asset per screen.",
+      ],
+      [
+        "I chose native CSS scroll-snap over fullpage.js for the swipe-to-choose “camera roll”, and sized layouts from a JS-measured --app-height variable because 100vh is unreliable inside LINE’s in-app browser.",
+      ],
     ],
     outcome: [
       "The campaign launched in 2024 as a mobile-only LINE mini-app for PAÑPURI’s Thai audience. Users sign, take three quizzes, get one of three personalized result cards, and can share it to Facebook or Instagram, save it with a long-press, or send a LIFF Flex-message postcard that invites a friend into the journey.",
@@ -105,12 +148,78 @@ const caseStudies: Record<string, CaseStudy> = {
       { value: "3", label: "Personalized result & postcard variants" },
       { value: "9 weeks", label: "First commit to final release fix" },
     ],
+    liveDemo: {
+      url: "https://creativetravelist.github.io/immersive-journey-v1/",
+      note: "Standalone build outside LINE, so login and sharing are disabled. Best viewed on mobile.",
+    },
     demoVideoId: "FWb1u-R1MG4",
     heroScreens: [
-      { src: "/panpuri-home.png", alt: "PAÑPURI journey start screen" },
       { src: "/panpuri-signing.png", alt: "Signing the personal pledge" },
+      { src: "/panpuri-capturing.png", alt: "Capturing the view from the trail" },
       { src: "/panpuri-flag-choosing.png", alt: "Choosing a prayer flag" },
     ],
+    detailImage: {
+      src: "/panpuri-camera-pan.png",
+      alt: "Four journey steps in sequence, the illustrated background moving from warm foothills to a snowy summit with prayer flags",
+      caption:
+        "One illustrated background, panned upward step by step with background-position transitions: from the trailhead, through the camera viewfinder, to the prayer flags at the summit.",
+    },
+  },
+  funbike: {
+    title: "FunBike Station: a scan-first POS for riverside bike rentals",
+    summary:
+      "A web POS that lets station staff rent out, take back and charge for bikes by scanning.",
+    role: "Frontend Engineer (contributed to the back-office POS)",
+    stack: [
+      "Next.js 15 + React 19",
+      "RTK Query + OpenAPI types",
+      "Firebase (App Hosting + FCM)",
+    ],
+    year: "2025",
+    context:
+      "Cycling Lifestyle Foundation × New Taipei City Government via CatchOpz · Riverside bike rental stations",
+    challenge: [
+      "FunBike is the riverside bike rental service run by the Cycling Lifestyle Foundation with New Taipei City’s High Water Land Engineering Management Office. Riders sign up and show a member QR code in LINE, and station staff hand out bikes, take them back, sell add-ons and handle breakdowns, often with a queue at the counter. Each step has rules staff would otherwise check by hand: a bike returned at a different station carries a transport fee, a swap after 15 minutes is charged differently, a special discount can’t be combined with a cross-station return, and customers pay with LINE Pay, JKO Pay, cash, vouchers or a mix.",
+      "The POS runs in the browser on staff devices, including iOS 16 Safari, and has to work with both a camera and a USB or Bluetooth barcode scanner. It depends on a backend API whose schema was still changing during development, and on LINE push notifications that can fail when the monthly quota runs out.",
+    ],
+    approach: [
+      [
+        "I contributed to the back-office POS alongside two other frontend engineers, building most of the counter flows: login and station selection, the rental cart, returns, the status overview, product sales, LINE Pay / JKO Pay offline payments, refunds, SOS alerts, vehicle stock-check and check-in. The riders’ LINE member app was a separate repo built by another team at CatchOpz. Teammates set up the project skeleton, CI and the shared scanner hooks, and built the accounting and daily report modules. The backend API is a separate service on Cloud Run.",
+        "I kept all server state in RTK Query, one injected slice per domain (src/store/apis/*.ts), and used Redux slices only for the session, cart and notification inbox. Every screen reads the same cached vehicle and order data, so a return on one tab shows up in the status overview without manual syncing. Types are generated from the backend’s OpenAPI spec, which caught its schema changes (Id → No, a new getVehicle endpoint) at compile time.",
+      ],
+      [
+        "Returns are built for a queue of bikes (pos/return/page.tsx). With the camera, scanning restarts automatically after each bike, and a 50 ms debounce stops a single barcode from triggering two returns. Each scan checks the vehicle’s status, switches the active member if the bike belongs to someone else, and then runs the cross-station check: if the bike has a special discount and is returned somewhere other than where it was rented, staff must cancel the discount before the transport-fee modal opens (showTransferStationFeeModal.tsx).",
+        "For mobile payments, staff scan the customer’s LINE Pay or JKO Pay code by camera or scanner, and the one-time key goes to the backend’s offline-payment endpoints (src/store/apis/payment.ts). Cash, EasyWallet, sports vouchers and other methods can be split within one order through a single request (payment-modal-content.tsx). After a rental or return, the POS passes the LIFF receipt URL to the backend, so the rider gets a LINE message that opens their receipt in the LINE member app.",
+        "SOS requests from riders reach staff through Firebase Cloud Messaging (src/app/FCMProvider.tsx). When a message arrives, I mark it as received and fetch the full request in parallel. On startup I also load every unread SOS, so an alert sent while the tab was closed still shows up. A build step writes the Firebase config into the service worker, because public/firebase-messaging-sw.js can’t read Next.js env vars (scripts/generate-firebase-config.js).",
+        "The backend returns 503 when LINE’s push quota is used up, even though the rental or return itself succeeded. I handle this in one place, the RTK Query fetchFn (src/store/apis/base.ts): it warns staff that the customer won’t get a LINE message and passes the response on as a success, so the counter flow keeps going. The same wrapper turns a 401 into a re-login event.",
+      ],
+      [
+        "The first version worked in demos but not at a real counter. After a feedback round with the client on May 26, I shipped 12 PRs in three weeks: showing the transport-fee warning only for true cross-station returns, blocking discount + cross-station combinations, adding a breakdown-swap option, letting search find all unpaid orders, and showing unreturned rather than returned counts.",
+        "Small platform gaps also broke things in production. Set.prototype.intersection doesn’t exist on iOS 16 Safari, so I replaced it with lodash. A failed service-worker registration used to block the whole app, so I made it a warning instead.",
+        "The lesson I took away: for an operations tool, the rules staff apply in their heads are the real spec, and most of them only surface once staff use the app at the counter.",
+      ],
+    ],
+    outcome: [
+      "The POS launched at the rental stations on July 1, 2025. It deploys to Firebase App Hosting (asia-east1) with separate dev and prod projects, GitHub Actions runs a format check and a full build on every PR, and it installs as a standalone PWA on staff devices.",
+      "My last merged POS PR was in June 2025. After that, other team members kept maintaining the repo.",
+    ],
+    metrics: [
+      { value: "88", label: "Merged POS pull requests I authored (of 187)" },
+      {
+        value: "~51%",
+        label:
+          "Of current POS source lines (git blame, excluding generated types)",
+      },
+      { value: "12", label: "PRs shipped from client feedback in 3 weeks" },
+    ],
+    detailVideo: {
+      id: "0hj4EG-231k",
+      title: "FunBike POS receiving a rider SOS alert",
+      caption:
+        "Rider SOS requests arrive through Firebase Cloud Messaging; the POS marks them received, fetches the full request, and reloads any unread alerts on startup so none are missed while the tab is closed.",
+    },
+    demoVideoId: "BnnYocMDbFU",
+    demoVideoAspectRatio: "4 / 3",
   },
   "tiffany-bvlgari-thailand": {
     title: "Bvlgari Thailand LINE E-Shop",
@@ -119,7 +228,7 @@ const caseStudies: Record<string, CaseStudy> = {
     stack: ["React", "LINE LIFF", "Material UI"],
     year: "2025–2026",
     context:
-      "BVLGARI Thailand · Luxury jewelry & watches, in-app commerce on LINE",
+      "BVLGARI Thailand via CatchOpz · Luxury jewelry & watches, in-app commerce on LINE",
     challenge: [
       "Bvlgari Thailand needed a storefront that customers could open straight from the brand's LINE Official Account. It had to let them browse collections, read product details, and place orders without leaving the chat app. The store had to feel like Bvlgari while running as a mini-app inside LINE's in-app browser, in both Thai and English.",
       "The project started from an existing white-label LINE shop template built for another luxury brand, on a shared internal platform (base-shell, material-ui-shell, shopbot-kit). That meant rebranding everything without forking the platform. Homepage sections, collections, and translations were hardcoded or mocked, but they needed to come from a CMS so they could change without a deploy. Thai and English needed different typefaces. iOS WebViews showed rendering artifacts. Marketing also needed reliable attribution across GA4, Meta, and LINE Ads.",
@@ -138,12 +247,76 @@ const caseStudies: Record<string, CaseStudy> = {
     ],
     outcome: [
       "I delivered a bilingual LIFF storefront with 12 routes, including home, category, collection, product, cart, checkout, order history, order detail, settings, and FAQ. It deploys to Firebase Hosting with separate dev and prod targets through GitHub Actions. Merchandising content and its translations are now managed through backend APIs instead of code changes.",
+      "I also built a Thai/English LINE e-shop for Tiffany & Co. Thailand, another agency-commissioned project at CatchOpz.",
     ],
     metrics: [
       { value: "2 locales", label: "Thai & English, 172 UI keys each" },
       { value: "29", label: "Pull requests merged" },
       { value: "12", label: "Storefront routes shipped" },
     ],
+    detailImage: {
+      src: "/bvlgari-thailand-en-th.png",
+      alt: "Bvlgari LINE e-shop home page and side menu shown in English and Thai side by side",
+      caption:
+        "The same home page and menu in English and Thai. Switching the EN/TH toggle swaps UI strings and CMS category names, and the theme changes typeface with the language: BulgariType for English headings, Noto Sans Thai for Thai.",
+    },
+    demoVideoId: "35l7bauPqb8",
+  },
+  "harry-winston-winter-wonderland": {
+    title:
+      "Winston’s Winter Wonderland: a shareable holiday campaign inside LINE",
+    summary:
+      "A mobile campaign inside LINE where users finish three tasks on a treasure map, then sign and send a jewelry postcard to friends.",
+    role: "Frontend Engineer (campaign UI owner, 3-person team)",
+    stack: ["React 18 + MUI", "LINE LIFF", "Firebase Hosting"],
+    year: "2024",
+    context:
+      "Harry Winston (Taiwan) via CatchOpz · Luxury jewelry, LINE official account holiday campaign",
+    challenge: [
+      "Harry Winston wanted a holiday campaign for its LINE official account that felt like a small interactive story, not a landing page. Users enter “Winston’s Winter Wonderland”, follow a route across an illustrated map, finish three tasks to light up three jewelry pieces, and end by signing a postcard and sending it to friends in LINE. That last step brings new users back into the campaign.",
+      "Everything had to work inside LINE’s in-app browser, which brings its own limits: the on-screen keyboard resizes the viewport, audio can’t autoplay before the user interacts, and sharing into chats only works through LIFF APIs. The generated postcard image also had to look polished enough for a luxury brand after it was compressed into a chat message.",
+    ],
+    approach: [
+      [
+        "I was the only frontend engineer building the campaign itself: the opening page, the treasure map, both wallpaper tasks and the postcard signing flow, which came to 74 of the repo’s 97 commits across 17 merged PRs. A teammate set up the project from CatchOpz’s React + MUI starter (LIFF and auth providers, a GA wrapper) and the GitHub Actions → Firebase Hosting pipeline.",
+        "Because the app runs as a LIFF page, every user is already signed in to LINE. I used that LINE user ID as the key for all analytics, and the share step can post directly into friends’ chats. Nearly all the visuals are designer-made PNG, GIF and SVG files served from a CDN. I kept them in one map (src/configs/holiday.js → src/configs/constant.js) so I could swap in a new asset version with a one-line change during feedback rounds.",
+      ],
+      [
+        "Postcard pipeline (src/pages/SigningPage/index.js): the visible card has a drop shadow and an underlined name field, and neither should appear in the shared image. So I render a hidden copy without them, capture it with html2canvas at 2× scale and turn it into a PNG blob. I upload that blob to the backend (src/apis/server/holiday.js), because a LINE Flex Message image needs a public HTTPS URL, not a local blob.",
+        "Sharing (LiffShareTargetPicker.js): liff.shareTargetPicker sends a text greeting plus two Flex bubbles, the postcard and a “start” button, both linking back into the campaign. When the share succeeds, I ask the backend to send the user a follow-up message, then close the LIFF window.",
+        "Treasure map (src/pages/Map/index.js): each finished task is carried in router state. When a task ends, the user returns to /map#stepN and the page scrolls smoothly to the step they just completed. The route between steps is an SVG path animated with stroke-dasharray, and the matching jewel lights up. Once all three tasks are done, an envelope modal opens and leads to the signing page.",
+        "In-app browser fixes: on input blur I call window.scrollTo(0, 0), because otherwise the LINE keyboard leaves the page shifted and no longer full-screen. The signing steps use URL hashes (/signing#signing, #share) so the in-app back gesture moves between steps instead of leaving the page. Wallpapers save after a 700 ms long press.",
+      ],
+      [
+        "The postcard image took the most rounds. I raised the html2canvas scale from 0.95 to 1.6 to 2 as the client reviewed real shares on phones. At 2× the capture plus upload took noticeably long, so I added a full-screen loader. I also stopped reusing the blob made when the name field lost focus and now re-render it at share time, so the image always matches what the user sees.",
+        "Analytics needed a fix too. Users return to the map after every task, and each return remounted the page and logged another map view, which inflated the funnel. I moved that page view out of the route tracker and deduplicated it with sessionStorage. On the other side of the trade-off, task progress lives only in router state: that kept a short-lived campaign simple, but reopening the LIFF link starts the user over. The lesson I took away: in a campaign that lives inside a webview, you can’t treat the share image or the analytics as finished until you have checked them on real devices and in real data.",
+      ],
+    ],
+    outcome: [
+      "I delivered six routes (landing redirect, opening, map, two wallpaper tasks, signing) as a single-page React app. GitHub Actions deploys it to separate dev and prod Firebase Hosting targets. The last change shipped on December 13, 2024, after three rounds of client feedback.",
+    ],
+    metrics: [
+      {
+        value: "17",
+        label: "Merged PRs I authored, from first UI draft to launch fixes",
+      },
+      {
+        value: "29",
+        label: "GA interaction events, each tied to a LINE user ID",
+      },
+      { value: "3", label: "Client feedback rounds before launch" },
+    ],
+    detailImage: {
+      src: "/harry-winston-share-flow.png",
+      alt: "Share loop: the campaign’s opening page, LINE’s share target picker, and the signed postcard arriving in a friend’s chat with a button back into the campaign",
+      caption:
+        "The share loop: liff.shareTargetPicker sends the signed postcard as a Flex message, and its button brings the friend back to the opening page to start their own journey.",
+    },
+    liveDemo: {
+      url: "https://creativetravelist.github.io/holiday-2024/",
+      note: "Standalone build outside LINE, so login and postcard sharing are disabled. Best viewed on mobile.",
+    },
+    demoVideoId: "HvHJR5fPHPw",
   },
   photopacer: {
     title: "Photo Pacer — Race Photo Marketplace",
@@ -151,7 +324,7 @@ const caseStudies: Record<string, CaseStudy> = {
       "A race-photo marketplace where runners find their photos by bib number.",
     role: "Founder & Full-stack Engineer",
     stack: ["Next.js", "Node.js / Express", "AWS (S3 + Rekognition)"],
-    year: "2023–2025",
+    year: "2023–2024",
     context:
       "PHOTO PACER 攝影小隊 · Self-initiated product, sports event photography",
     challenge: [
@@ -178,21 +351,35 @@ const caseStudies: Record<string, CaseStudy> = {
       ],
     ],
     outcome: [
-      "I ran PHOTO PACER from October 2023 to June 2025 and covered 20 race events. Each event produced 2,000 to 5,000 photos, all processed through the bib-detection and watermark pipeline. Seven photographers registered, two of them uploaded photos, and each event averaged 16 paid orders through LINE Pay and NewebPay.",
-      "Because price and visibility were already flags in the pipeline, I added private albums (January 2025) and later moved the platform to free downloads (June 2025) by extending the existing code instead of building separate paths.",
+      "I ran PHOTO PACER from October 2023 to June 2024 and covered 20 race events. Each event produced 2,000 to 5,000 photos, all processed through the bib-detection and watermark pipeline. Seven photographers registered, two of them uploaded photos, and each event averaged 16 paid orders through LINE Pay and NewebPay.",
+      "Because price and visibility were already flags in the pipeline, I added private albums and later moved the platform to free downloads by extending the existing code instead of building separate paths.",
     ],
     metrics: [
       { value: "20", label: "Race events hosted" },
       { value: "2–5K", label: "Photos processed per event" },
       { value: "0 bytes", label: "Image data proxied through the API" },
     ],
+    detailImage: {
+      src: "/photopacer-search.jpg",
+      alt: "Runner search page for the 2025 Taipei Marathon with a bib number search bar and filtered photo results",
+      caption:
+        "Runner search page. Runners enter a bib number to find their photos, or filter by photographer, time range, or photos whose bib couldn’t be read. A hint under the search bar explains how to enter relay bibs.",
+    },
+    featureImage: {
+      src: "/photopacer-upload.jpg",
+      alt: "Photographer upload page showing 53 of 53 photos uploaded for the 2025 Taipei Marathon",
+      caption:
+        "Photographer upload page. Photos go straight to S3 via presigned multipart URLs, then a background job detects bib numbers, adds the watermark and writes each photo’s record to MongoDB.",
+    },
+    demoVideoId: "TcvSHUeHAy0",
+    demoVideoAspectRatio: "16 / 9",
   },
   "ai-smart-city-hackathon-2026": {
     title:
       "AI Land Appraisal Workbench — New Taipei City Land Administration Hackathon",
     summary:
       "AI-assisted land appraisal forms, maps, and reports in one workflow.",
-    role: "Frontend Engineer (frontend lead on a 3-person team)",
+    role: "Frontend Lead (3-person team)",
     stack: ["React 19 + TypeScript", "Leaflet", "AWS Amplify / Lambda"],
     year: "2026",
     context:
@@ -203,7 +390,7 @@ const caseStudies: Record<string, CaseStudy> = {
     ],
     approach: [
       [
-        "I built the frontend app (React 19, Vite, Tailwind v4, Leaflet), and two teammates built the CLI and the AWS Lambda backend. I modelled the workflow as a three-stage pipeline (survey → regional factors → comparison). Each stage stays in a Partial state until the user confirms the previous one, so the types reflect how far the appraisal has progressed instead of filling empty placeholder tables. Every field records where its value came from (ai / prefilled / manual / edited), and a missing AI value stays empty rather than being guessed, because a government appraisal can't contain invented data. I put all cross-form dependencies in a single mapping table (lib/formLinkage.ts), so live AI results and manual edits go through the same logic.",
+        "CatchOpz’s CTO, a client I had been contracting with for two years, invited me to enter the hackathon together, with me as frontend lead. I owned the frontend app end to end (React 19, Vite, Tailwind v4, Leaflet), while two teammates built the CLI and the AWS Lambda backend. I modelled the workflow as a three-stage pipeline (survey → regional factors → comparison). Each stage stays in a Partial state until the user confirms the previous one, so the types reflect how far the appraisal has progressed instead of filling empty placeholder tables. Every field records where its value came from (ai / prefilled / manual / edited), and a missing AI value stays empty rather than being guessed, because a government appraisal can't contain invented data. I put all cross-form dependencies in a single mapping table (lib/formLinkage.ts), so live AI results and manual edits go through the same logic.",
       ],
       [
         "The comparison table recalculates in one direction, from the base price forward (lib/pricing.ts): normal unit price → date adjustment → regional and individual adjustments → trial price → weighted benchmark price. Case weights follow the 50/30/20 tiers in Article 27 of the Real Estate Appraisal Technical Rules. An earlier version worked backwards from the stored trial price, and its values drifted as soon as the user edited two adjustment rates separately. Recomputing all cases from stored state fixed that.",
@@ -218,10 +405,27 @@ const caseStudies: Record<string, CaseStudy> = {
       "I delivered a working six-step flow: task setup with map pins for the benchmark lot and three comparison cases, the three appraisal forms, map generation, and export. Six backend services are wired in (facilities, zoning, regional-factor production, comparison production, image upload, report export). The app deploys to AWS Amplify, and the zoning map falls back to a bundled GeoJSON file if its Lambda is down.",
     ],
     metrics: [
-      { value: "3 forms + 4 maps", label: "Official appraisal documents generated" },
+      {
+        value: "3 forms + 4 maps",
+        label: "Official appraisal documents generated",
+      },
       { value: "6", label: "Backend services integrated" },
       { value: "11 days", label: "Initial commit to final demo build" },
     ],
+    detailImage: {
+      src: "/ai-smart-city-hackathon-boundary.png",
+      alt: "Boundary resolver: a legal boundary description for a Shulin District parcel turned into a draggable polygon on a Leaflet map",
+      caption:
+        "Boundary resolver. A legal description such as “west of Bade St., south of Qizhi St.…” is matched against OpenStreetMap street geometry to place the parcel’s corners, and the user can drag the pin to fine-tune any corner that can’t be resolved.",
+    },
+    featureImage: {
+      src: "/ai-smart-city-hackathon-pdf.png",
+      alt: "Exported nine-page appraisal report PDF: the field survey form on page 1, with map pages shown in the thumbnail sidebar",
+      caption:
+        "The exported report. One click combines the three appraisal forms and the Leaflet maps into a nine-page PDF, with map pages captured cleanly after converting Leaflet’s translate3d transforms to left/top positions.",
+    },
+    demoVideoId: "TOE7-qerE_8",
+    demoVideoAspectRatio: "16 / 9",
   },
   lifebook: {
     role: "Product Designer & Full-stack Engineer (solo)",
@@ -247,26 +451,85 @@ const caseStudies: Record<string, CaseStudy> = {
       "I delivered a deployed MVP [TODO: live URL]. It has two sign-in methods (magic link and Google OAuth), AI story structuring, LifeCard editing, a timeline view, inline card-to-card connections, and an image gallery. [TODO: 上線日期 — 看 Vercel 第一次 production deployment] Next on the roadmap are tags, a timeline filter and an insights panel.",
     ],
     metrics: [
-      { value: "~3 weeks", label: "First commit to MVP core (auth, AI, connections)" },
+      {
+        value: "~3 weeks",
+        label: "First commit to MVP core (auth, AI, connections)",
+      },
       { value: "14", label: "Authenticated API route handlers" },
       { value: "2", label: "Sign-in methods (magic link + Google OAuth)" },
     ],
   },
-};
+  "ichiban-kuji-platform": {
+    title: "Ichiban Kuji Platform — LINE Storefront & Admin Console",
+    summary:
+      "A Japanese prize lottery run inside LINE: players top up points, draw tickets with a full reveal sequence, and ship their prizes home or to a convenience store.",
+    role: "Frontend Engineer (LIFF storefront + admin dashboard)",
+    stack: [
+      "Next.js 16 / React 19 + TypeScript",
+      "RTK Query + OpenAPI types",
+      "Firebase RTDB + LINE LIFF",
+    ],
+    year: "2026",
+    context: "CatchOpz · Online ichiban kuji (prize lottery) sold through LINE",
+    challenge: [
+      "Ichiban kuji is a physical lottery: a fixed pool of numbered tickets, each mapped to a prize tier, plus a “Last One” prize for whoever draws the final ticket. Shops wanted to run these online for customers who already follow them on LINE. That meant real money and real parcels: players top up points, spend them on draws, and later ship hundreds of small physical prizes, while staff need a console to run the pools and the shipping.",
+      "Three things made it hard. Money and logistics had to work inside LINE’s in-app browser, where liff.openWindow can’t POST and payment providers expect form submissions. The draw itself is the product, so the reveal had to feel like peeling a real ticket on a phone webview. And a ticket pool is shared, finite inventory: two players can’t draw from the same set at once, and every open screen has to see remaining prizes change live.",
+    ],
+    approach: [
+      [
+        "I built both frontends in separate repos for CatchOpz, a client I’ve worked with for two years: the customer-facing LIFF app and the admin console. The backend API, the draw engine and the point ledger were built by CatchOpz’s backend team, and a teammate set up CI/CD. Both apps talk to the same backend through RTK Query, typed from its OpenAPI spec (src/openapi.d.ts), so a schema change shows up as a compile error instead of a bug an operator or player finds later.",
+        "One LIFF codebase serves every shop: the shop is resolved from /shop/[shopId], and its config, including its own LIFF ID, is fetched on the server with React cache() (services/shop.ts). Each shop picks its payment, logistics and invoicing providers in the admin console, so the storefront never hard-codes a provider.",
+      ],
+      [
+        "Top-ups and payments: the frontend has no payment SDK. A top-up creates an order, then POST /payment/{orderId} returns the provider’s HTML, and renderPaymentOverlay submits its form or follows its redirect (utils/payment.ts). The same path pays shipping fees, so ECPay, LINE Pay or NewebPay can be switched per shop without frontend changes. Back from the provider, the success popup opens only when the order reads PAID. Draw prices come from a server quote fetched each time the confirm dialog opens, because the real charge is recalculated inside the submit transaction (hooks/useDrawQuote.ts).",
+        "Shipping: six delivery methods (home, custom address, in-store pickup, face-to-face, 7-Eleven, FamilyMart), and a method is offered only if every item in the request allows it. For convenience-store pickup, liff.openWindow can only open a URL, so I added a bridge page that auto-submits the POST to the ECPay store map (components/Shipment/CvsBridgeContent.tsx). The result never comes back through the window: both LIFF and desktop poll the backend by selectionToken every 2 s, so one code path works everywhere (components/Shipment/CvsStorePicker.tsx). In the admin, shipments are the largest module (21 endpoints): splitting an order across carrier shipments, voiding, batch labels, and an A4 picking-list PDF generated in the browser with jsPDF.",
+        "Draw effects: the reveal is a sequence, not a single animation. An intro video hands off to a loop, the ticket drops in with a light beam and a 12-frame shine sprite, and then the player peels it by drag with peel.js. Past 42% the peel finishes itself over 280 ms with a requestAnimationFrame ease-out, so nobody gets stuck on a half-open ticket (hooks/usePeelReveal.ts). Ticket faces are drawn on canvas, with the number set along a Bézier curve and spaced by arc length so letters don’t bunch up (hooks/useChipWinImage.ts). Grand and Last One prizes get a glow frame driven by API flags, which turns off under prefers-reduced-motion. All 21 images and 2 videos preload in parallel with the draw request, so the sequence never stalls (hooks/useAssetsPreload.ts).",
+        "Firebase RTDB: I used it only as a change signal and kept the data in REST. Each kuji has a pool node holding just a version number: when it changes, the app refetches the odds and invalidates the shared Kuji tag, so list pages update too. A drawSlot node’s expiresAt drives the queue countdown, falling back to an HTTP read until the first push arrives (hooks/useRtdbKuji.ts). A third node feeds the live winner ticker. Nothing subscribes until Firebase custom-token sign-in finishes, and every listener re-subscribes when the user changes from guest to member (hooks/useFirebaseAuth.ts).",
+      ],
+      [
+        "The draw slot is a server lease, and LINE users switch apps mid-draw. I added an initializer that routes players back to their active lobby, which introduced its own bug: the cached session list could point to a session that had already been released. The fix was to re-fetch on every lobby entry and ignore results older than the entry timestamp. Countdowns are computed from the absolute expiry time, so a throttled webview timer doesn’t drift, and a failed draw now releases the slot and sends the player back instead of leaving them on an error toast.",
+        "The effects went through the same loop of testing on real phones: the LIFF webview cached videos by file name, so asset URLs carry a version; rare-prize effects first keyed off the tier label and now read explicit API flags. The lesson I took away: when the server owns the money, the lock and the inventory, the client should treat its own copy as a hint, re-confirm it at each entry point, and spend its effort on making the waiting and the reveal feel good.",
+      ],
+    ],
+    outcome: [
+      "I shipped 32 customer screens in LINE (LINE login with OTP sign-up, kuji detail with odds and a SHA commitment hash, the draw lobby and reveal, points top-up, coupons, shipment requests and order tracking) and 20 admin pages covering kuji sets, orders, shipments, members, promotions, CMS content and store settings. Both run on Firebase (App Hosting for the LIFF app, Hosting for the console) with separate dev and prod targets deployed through GitHub Actions. The platform soft-launched on 5 October 2026.",
+      "I also wrote engineering docs for the LIFF app (PRD, architecture, SOP, FAQ and a DESIGN.md token spec), so the next developer can learn the LIFF, payment and auth constraints without reverse-engineering them.",
+    ],
+    metrics: [
+      { value: "32 + 20", label: "LIFF screens + admin pages shipped" },
+      {
+        value: "6",
+        label: "Delivery methods, including two convenience-store chains",
+      },
+      {
+        value: "3",
+        label: "RTDB nodes driving live odds, draw queues and a winner ticker",
+      },
+    ],
+    detailImage: {
+      src: "/ichiban-kuji-draw-sequence.png",
+      alt: "Draw reveal sequence: a ticket dropping through gold light beams, landing, being peeled back to show a prize tier, and the revealed prize in a glowing frame",
+      caption:
+        "The reveal is a sequence, not one animation: the ticket drops in through a light beam, the player peels it by drag (past 42% it finishes itself), and Grand and Last One prizes land in a glow frame.",
+    },
+    demoVideoId: "8v9Ti1DlMJA",
+  },
+}
 
 const stats = [
   { value: "6 years", label: "building production web apps" },
   { value: "12+", label: "client projects shipped" },
   { value: "2+ years", label: "with my current long-term client" },
-];
+]
 
 const experience: {
-  period: string;
-  role: string;
-  type: string;
-  company: string;
-  note?: string;
-  venture?: boolean;
+  period: string
+  role: string
+  type: string
+  company: string
+  note?: string
+  link?: { label: string, href: string }
+  venture?: boolean
 }[] = [
   {
     period: "2024 — Present",
@@ -287,6 +550,10 @@ const experience: {
     type: "Full-time",
     company: "JKOPay",
     note: "Taiwan’s largest e-payment platform, 6M+ users",
+    link: {
+      label: "Built jkopay.com/application",
+      href: "https://www.jkopay.com/application",
+    },
   },
   {
     period: "2020 — 2021",
@@ -294,114 +561,114 @@ const experience: {
     type: "Full-time",
     company: "Environmental Resources International",
   },
-];
+]
 
 function useTheme() {
   const [dark, setDark] = useState(() => {
-    const saved = localStorage.getItem("linda-portfolio-theme");
+    const saved = localStorage.getItem("linda-portfolio-theme")
     return saved
       ? saved === "dark"
-      : window.matchMedia("(prefers-color-scheme: dark)").matches;
-  });
+      : window.matchMedia("(prefers-color-scheme: dark)").matches
+  })
 
   useEffect(() => {
-    document.documentElement.dataset.theme = dark ? "dark" : "light";
-    localStorage.setItem("linda-portfolio-theme", dark ? "dark" : "light");
-  }, [dark]);
+    document.documentElement.dataset.theme = dark ? "dark" : "light"
+    localStorage.setItem("linda-portfolio-theme", dark ? "dark" : "light")
+  }, [dark])
 
-  return { dark, setDark };
+  return { dark, setDark }
 }
 
 function useScrollMotion(key?: string) {
   useEffect(() => {
-    const root = document.documentElement;
+    const root = document.documentElement
     const reduceMotion = window.matchMedia(
       "(prefers-reduced-motion: reduce)",
-    ).matches;
+    ).matches
 
     const revealObserver = new IntersectionObserver(
       (entries) => {
         entries.forEach((entry) => {
           if (entry.isIntersecting) {
-            entry.target.classList.add("is-visible");
-            revealObserver.unobserve(entry.target);
+            entry.target.classList.add("is-visible")
+            revealObserver.unobserve(entry.target)
           }
-        });
+        })
       },
       { threshold: 0.1, rootMargin: "0px 0px -6% 0px" },
-    );
+    )
     document
       .querySelectorAll<HTMLElement>(".reveal")
-      .forEach((element) => revealObserver.observe(element));
+      .forEach((element) => revealObserver.observe(element))
 
     const parallaxElements =
-      document.querySelectorAll<HTMLElement>("[data-parallax]");
+      document.querySelectorAll<HTMLElement>("[data-parallax]")
     const progressElements = document.querySelectorAll<HTMLElement>(
       "[data-scroll-progress]",
-    );
-    let frame = 0;
+    )
+    let frame = 0
 
     const update = () => {
-      frame = 0;
-      const scrollY = window.scrollY;
-      const viewport = window.innerHeight;
-      const scrollable = root.scrollHeight - viewport;
+      frame = 0
+      const scrollY = window.scrollY
+      const viewport = window.innerHeight
+      const scrollable = root.scrollHeight - viewport
 
       root.style.setProperty(
         "--page-progress",
         scrollable > 0 ? (scrollY / scrollable).toFixed(4) : "0",
-      );
-      root.classList.toggle("is-scrolled", scrollY > 8);
+      )
+      root.classList.toggle("is-scrolled", scrollY > 8)
 
-      if (reduceMotion) return;
+      if (reduceMotion) return
 
-      const heroScroll = Math.min(scrollY, viewport);
+      const heroScroll = Math.min(scrollY, viewport)
       parallaxElements.forEach((element) => {
-        const speed = Number(element.dataset.parallax) || 0.2;
+        const speed = Number(element.dataset.parallax) || 0.2
         element.style.setProperty(
           "--parallax-y",
           `${(heroScroll * speed).toFixed(1)}px`,
-        );
+        )
         element.style.setProperty(
           "--parallax-fade",
           Math.max(0, 1 - heroScroll / (viewport * 0.85)).toFixed(3),
-        );
-      });
+        )
+      })
 
       progressElements.forEach((element) => {
-        const rect = element.getBoundingClientRect();
-        const progress = (viewport * 0.7 - rect.top) / rect.height;
+        const rect = element.getBoundingClientRect()
+        const progress = (viewport * 0.7 - rect.top) / rect.height
         element.style.setProperty(
           "--progress",
           Math.min(1, Math.max(0, progress)).toFixed(4),
-        );
-      });
-    };
+        )
+      })
+    }
 
     const requestUpdate = () => {
-      if (!frame) frame = requestAnimationFrame(update);
-    };
+      if (!frame) frame = requestAnimationFrame(update)
+    }
 
-    update();
-    window.addEventListener("scroll", requestUpdate, { passive: true });
-    window.addEventListener("resize", requestUpdate);
+    update()
+    window.addEventListener("scroll", requestUpdate, { passive: true })
+    window.addEventListener("resize", requestUpdate)
 
     return () => {
-      revealObserver.disconnect();
-      cancelAnimationFrame(frame);
-      window.removeEventListener("scroll", requestUpdate);
-      window.removeEventListener("resize", requestUpdate);
-      root.classList.remove("is-scrolled");
-    };
-  }, [key]);
+      revealObserver.disconnect()
+      cancelAnimationFrame(frame)
+      window.removeEventListener("scroll", requestUpdate)
+      window.removeEventListener("resize", requestUpdate)
+      root.classList.remove("is-scrolled")
+    }
+  }, [key])
 }
 
 function ThemeToggle({
   dark,
   onToggle,
 }: {
-  dark: boolean;
-  onToggle: () => void;
+  dark: boolean
+  onToggle: () => void
 }) {
   return (
     <button
@@ -413,20 +680,20 @@ function ThemeToggle({
       <span aria-hidden="true">{dark ? "Light" : "Dark"}</span>
       <span className="theme-toggle__dot" aria-hidden="true" />
     </button>
-  );
+  )
 }
 
 function Header({
   dark,
   onThemeToggle,
 }: {
-  dark: boolean;
-  onThemeToggle: () => void;
+  dark: boolean
+  onThemeToggle: () => void
 }) {
-  const [menuOpen, setMenuOpen] = useState(false);
-  const homePrefix = window.location.pathname === "/" ? "" : "/";
+  const [menuOpen, setMenuOpen] = useState(false)
+  const homePrefix = window.location.pathname === "/" ? "" : "/"
 
-  const closeMenu = () => setMenuOpen(false);
+  const closeMenu = () => setMenuOpen(false)
 
   return (
     <header className="site-header">
@@ -471,27 +738,27 @@ function Header({
       </nav>
       <div className="scroll-progress" aria-hidden="true" />
     </header>
-  );
+  )
 }
 
 function SectionHeading({
   number,
   children,
 }: {
-  number: string;
-  children: React.ReactNode;
+  number: string
+  children: React.ReactNode
 }) {
   return (
     <div className="section-heading reveal">
       <span className="section-number">{number}</span>
       <h2>{children}</h2>
     </div>
-  );
+  )
 }
 
 function HomePage() {
-  const { dark, setDark } = useTheme();
-  useScrollMotion();
+  const { dark, setDark } = useTheme()
+  useScrollMotion()
 
   return (
     <div className="site-shell" id="top">
@@ -568,7 +835,19 @@ function HomePage() {
                   </span>
                   <div className="project-image">
                     {project.image ? (
-                      <img src={project.image} alt={`${project.title} screenshot`} />
+                      <>
+                        <img
+                          src={project.image}
+                          alt={`${project.title} screenshot`}
+                        />
+                        {project.inset ? (
+                          <img
+                            className="project-image__inset"
+                            src={project.inset}
+                            alt=""
+                          />
+                        ) : null}
+                      </>
                     ) : (
                       <>
                         <ImageIcon {...iconProps} />
@@ -616,7 +895,20 @@ function HomePage() {
                   </div>
                   <p>{item.company}</p>
                 </div>
-                <p className="timeline-note">{item.note ?? "—"}</p>
+                <p className="timeline-note">
+                  {item.note ?? "—"}
+                  {item.link ? (
+                    <a
+                      className="timeline-link"
+                      href={item.link.href}
+                      target="_blank"
+                      rel="noreferrer"
+                    >
+                      {item.link.label}
+                      <ArrowUpRight {...iconProps} size={12} />
+                    </a>
+                  ) : null}
+                </p>
               </article>
             ))}
           </div>
@@ -699,15 +991,15 @@ function HomePage() {
         <a href="#top">Back to top ↑</a>
       </footer>
     </div>
-  );
+  )
 }
 
 function MediaPlaceholder({
   label,
   large = false,
 }: {
-  label: string;
-  large?: boolean;
+  label: string
+  large?: boolean
 }) {
   return (
     <div
@@ -718,10 +1010,10 @@ function MediaPlaceholder({
       <p>{label}</p>
       <small>Replace with image or video</small>
     </div>
-  );
+  )
 }
 
-const codePathPattern = /([\w.-]+(?:\/[\w.{}[\]-]+)+\.(?:tsx?|jsx?))/;
+const codePathPattern = /([\w.-]+(?:\/[\w.{}[\]-]+)+\.(?:tsx?|jsx?))/
 
 function CaseParagraph({ text }: { text: string }) {
   return (
@@ -730,19 +1022,19 @@ function CaseParagraph({ text }: { text: string }) {
         .split(codePathPattern)
         .map((part, i) => (i % 2 === 1 ? <code key={i}>{part}</code> : part))}
     </p>
-  );
+  )
 }
 
 function ProjectDetailPage() {
-  const { slug } = useParams();
-  const projectIndex = projects.findIndex((item) => item.slug === slug);
-  const project = projects[projectIndex];
-  const { dark, setDark } = useTheme();
+  const { slug } = useParams()
+  const projectIndex = projects.findIndex((item) => item.slug === slug)
+  const project = projects[projectIndex]
+  const { dark, setDark } = useTheme()
 
   useEffect(() => {
-    window.scrollTo(0, 0);
-  }, [slug]);
-  useScrollMotion(slug);
+    window.scrollTo(0, 0)
+  }, [slug])
+  useScrollMotion(slug)
 
   if (!project) {
     return (
@@ -753,14 +1045,14 @@ function ProjectDetailPage() {
           Return to selected work
         </Link>
       </main>
-    );
+    )
   }
 
   const previous =
-    projects[(projectIndex - 1 + projects.length) % projects.length];
-  const next = projects[(projectIndex + 1) % projects.length];
-  const caseStudy = caseStudies[project.slug];
-  const context = caseStudy?.context ?? `${project.title} · Project context`;
+    projects[(projectIndex - 1 + projects.length) % projects.length]
+  const next = projects[(projectIndex + 1) % projects.length]
+  const caseStudy = caseStudies[project.slug]
+  const context = caseStudy?.context ?? `${project.title} · Project context`
 
   return (
     <div className="site-shell case-study" id="top">
@@ -768,8 +1060,7 @@ function ProjectDetailPage() {
 
       <main>
         <section
-          className="case-hero page-width parallax"
-          data-parallax="0.12"
+          className="case-hero page-width"
           aria-labelledby="case-study-title"
         >
           <Link className="case-back hero-reveal hero-reveal--one" to="/#work">
@@ -784,6 +1075,19 @@ function ProjectDetailPage() {
           <p className="case-summary hero-reveal hero-reveal--three">
             {caseStudy?.summary ?? project.description}
           </p>
+          {caseStudy?.liveDemo ? (
+            <div className="case-live hero-reveal hero-reveal--three">
+              <a
+                className="button button--outline"
+                href={caseStudy.liveDemo.url}
+                target="_blank"
+                rel="noreferrer"
+              >
+                Try the live demo <ArrowUpRight {...iconProps} />
+              </a>
+              <p>{caseStudy.liveDemo.note}</p>
+            </div>
+          ) : null}
           <dl className="case-meta hero-reveal hero-reveal--four">
             <div>
               <dt>Role</dt>
@@ -870,20 +1174,70 @@ function ProjectDetailPage() {
           </div>
 
           <div className="case-media-grid reveal reveal-stagger">
-            <MediaPlaceholder label="Interaction or feature detail" />
-            <MediaPlaceholder label="Responsive design detail" />
+            {caseStudy?.detailImage ? (
+              <figure className="case-figure">
+                <div className="case-media case-media--image case-media--auto">
+                  <img
+                    src={caseStudy.detailImage.src}
+                    alt={caseStudy.detailImage.alt}
+                  />
+                </div>
+                <figcaption>{caseStudy.detailImage.caption}</figcaption>
+              </figure>
+            ) : caseStudy?.detailVideo ? (
+              <figure className="case-figure">
+                <iframe
+                  className="case-figure__video"
+                  src={`https://www.youtube-nocookie.com/embed/${caseStudy.detailVideo.id}`}
+                  title={caseStudy.detailVideo.title}
+                  allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+                  referrerPolicy="strict-origin-when-cross-origin"
+                  allowFullScreen
+                />
+                <figcaption>{caseStudy.detailVideo.caption}</figcaption>
+              </figure>
+            ) : (
+              <MediaPlaceholder label="Interaction or feature detail" />
+            )}
           </div>
 
           <div className="case-copy case-copy--continued reveal">
-            {(caseStudy?.approach[1] ?? ["[Add implementation detail here: component architecture, animation strategy, performance optimization, collaboration, or a meaningful problem you solved.]"]).map((paragraph) => (
+            {(
+              caseStudy?.approach[1] ?? [
+                "[Add implementation detail here: component architecture, animation strategy, performance optimization, collaboration, or a meaningful problem you solved.]",
+              ]
+            ).map((paragraph) => (
               <CaseParagraph key={paragraph} text={paragraph} />
             ))}
           </div>
 
+          {caseStudy?.featureImage ? (
+            <div className="case-feature reveal reveal--media">
+              <figure className="case-figure">
+                <div className="case-media case-media--image case-media--auto">
+                  <img
+                    src={caseStudy.featureImage.src}
+                    alt={caseStudy.featureImage.alt}
+                  />
+                </div>
+                <figcaption>{caseStudy.featureImage.caption}</figcaption>
+              </figure>
+            </div>
+          ) : null}
+
           {caseStudy?.demoVideoId ? (
             <>
-              <div className="case-demo reveal reveal--media">
+              <div
+                className={`case-demo reveal reveal--media ${
+                  caseStudy.demoVideoAspectRatio ? "case-demo--landscape" : ""
+                }`}
+              >
                 <iframe
+                  style={
+                    caseStudy.demoVideoAspectRatio
+                      ? { aspectRatio: caseStudy.demoVideoAspectRatio }
+                      : undefined
+                  }
                   src={`https://www.youtube-nocookie.com/embed/${caseStudy.demoVideoId}`}
                   title={`${project.title} demo video`}
                   allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
@@ -899,12 +1253,18 @@ function ProjectDetailPage() {
             </>
           ) : (
             <>
-              <div className="reveal reveal--media">
-                <MediaPlaceholder label="Full-width flow or demo" large />
-              </div>
+              {caseStudy?.featureImage ? null : (
+                <div className="reveal reveal--media">
+                  <MediaPlaceholder label="Full-width flow or demo" large />
+                </div>
+              )}
 
               <div className="case-copy case-copy--continued reveal">
-                {(caseStudy?.approach[2] ?? ["[Close the approach section with a final decision, iteration, or lesson that demonstrates your contribution and frontend expertise.]"]).map((paragraph) => (
+                {(
+                  caseStudy?.approach[2] ?? [
+                    "[Close the approach section with a final decision, iteration, or lesson that demonstrates your contribution and frontend expertise.]",
+                  ]
+                ).map((paragraph) => (
                   <CaseParagraph key={paragraph} text={paragraph} />
                 ))}
               </div>
@@ -969,11 +1329,11 @@ function ProjectDetailPage() {
         <a href="#top">Back to top ↑</a>
       </footer>
     </div>
-  );
+  )
 }
 
 export const router = createBrowserRouter([
   { path: "/", Component: HomePage },
   { path: "/work/:slug", Component: ProjectDetailPage },
   { path: "*", Component: HomePage },
-]);
+])
