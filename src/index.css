@@ -240,6 +240,13 @@ footer a:hover {
   box-shadow: 0 0 0 0.25rem color-mix(in srgb, var(--success), transparent 80%);
 }
 
+.hero-greeting {
+  margin: 0 0 0.75rem;
+  color: #5b4b75;
+  font-family: var(--sans);
+  font-size: 18px;
+}
+
 .eyebrow {
   margin: 0;
   color: var(--muted);
