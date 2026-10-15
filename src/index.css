@@ -725,6 +725,19 @@ footer a:hover {
   line-height: 1.6;
 }
 
+.skill-link {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.2rem;
+  color: inherit;
+  text-decoration: underline;
+  text-underline-offset: 3px;
+}
+
+.skill-link:hover {
+  color: var(--text);
+}
+
 .contact {
   padding-top: 11rem;
   padding-bottom: 6rem;

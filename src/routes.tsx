@@ -547,13 +547,23 @@ const experience: {
     role: "Frontend Engineer",
     type: "Long-term contract",
     company: "CatchOpz",
+    note: "Martech startup building on LINE. 12+ projects for brands like Harry Winston, Tiffany & Co. and BVLGARI",
+    link: {
+      label: "Read the Ichiban Kuji case study",
+      href: "/work/ichiban-kuji-platform", // match your actual case study route
+    },
   },
   {
     period: "2023 — 2024",
     role: "Founder & Full-stack Engineer",
-    type: "Founder",
+    type: "Own product",
     company: "PhotoPacer",
     venture: true,
+    note: "Marathon photo marketplace I built solo. 20 race events, ~400 paid orders",
+    link: {
+      label: "Read the PhotoPacer case study",
+      href: "/work/photopacer", // match your actual case study route
+    },
   },
   {
     period: "2021 — 2023",
@@ -571,6 +581,7 @@ const experience: {
     role: "Frontend Engineer",
     type: "Full-time",
     company: "Environmental Resources International",
+    note: "Built the frontend of Taiwan’s Ministry of Environment Greenlife platform from scratch",
   },
 ];
 
@@ -962,6 +973,20 @@ function HomePage() {
               <div className="skill-group">
                 <h3>Backend & Cloud</h3>
                 <p>Node.js, AWS, Amplify, Payments, AI Integrations</p>
+              </div>
+              <div className="skill-group">
+                <h3>Certification</h3>
+                <p>
+                  <a
+                    className="skill-link"
+                    href="https://www.credly.com/badges/78bd8a96-5828-4cf8-976d-0cbd91221d6b"
+                    target="_blank"
+                    rel="noreferrer"
+                  >
+                    AWS Certified Cloud Practitioner (Oct 2024)
+                    <ArrowUpRight {...iconProps} size={12} />
+                  </a>
+                </p>
               </div>
             </div>
           </div>
