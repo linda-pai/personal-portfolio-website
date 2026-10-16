@@ -38,3 +38,9 @@ Tailwind CSS v4 is configured through the `@tailwindcss/vite` plugin. `src/index
 - Use double quotes for strings containing apostrophes (`"We're here to help"`), or escape them in single-quoted strings.
 - Ensure JSX tags are closed and braces are balanced.
 - Export components as default exports.
+
+## Content rules
+
+- Never name commercial client brands anywhere on the site: copy, metadata (title, description, Open Graph), URL slugs, file names, images and downloadable files. Describe them generically instead, e.g. "a global high-jewelry house", "two global luxury jewelry brands", "a Thai luxury wellness brand".
+- CatchOpz and JKOPay stay named. Public-sector clients (FunBike, the Cycling Lifestyle Foundation, New Taipei City Government, the Land Administration) also stay named.
+- Screenshots may show a client brand's logo; only the text, metadata, slugs and file names must stay brand-free.

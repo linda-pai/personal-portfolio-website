@@ -1,5 +1,5 @@
 import { Fragment, useEffect, useState } from "react";
-import { Link, createBrowserRouter, redirect, useParams } from "react-router";
+import { Link, createBrowserRouter, useParams } from "react-router";
 import {
   ArrowRight,
   ArrowUpRight,
@@ -49,32 +49,32 @@ const projects: Project[] = [
     featured: true,
   },
   {
-    title: "PAÑPURI",
+    title: "Wellness Brand LINE Campaign",
     description:
       "An immersive campaign for a Thai luxury wellness brand, running as a mini-app inside LINE. Players climb through six animated steps, answer three questions, and get a personalized, shareable result card.",
     tags: ["CSS Animation", "LINE Mini-app", "3D Transforms"],
     index: "03",
-    slug: "panpuri",
-    image: "/panpuri-home.png",
+    slug: "wellness-line-campaign",
+    image: "/wellness-campaign-home.png",
     featured: true,
   },
   {
-    title: "Tiffany & Co. and BVLGARI Thailand LINE E-Shops",
+    title: "Luxury Jewelry LINE E-Shops, Thailand",
     description:
-      "One LINE e-shop codebase, launched for Tiffany & Co. Thailand and then adapted for BVLGARI. Built at CatchOpz for a Thai marketing agency.",
+      "One LINE e-shop codebase, launched for a global luxury jewelry brand and then adapted for a second one. Built at CatchOpz for a Thai marketing agency.",
     tags: ["Next.js", "i18n", "E-commerce"],
     index: "04",
-    slug: "tiffany-bvlgari-thailand",
-    image: "/tiffany-bvlgari-thailand.png",
+    slug: "luxury-jewelry-line-eshops",
+    image: "/luxury-jewelry-eshops.png",
   },
   {
-    title: "Winston’s Winter Wonderland",
+    title: "High-Jewelry Holiday Campaign",
     description:
-      "Harry Winston holiday campaign in LINE: explore an illustrated map, collect jewels, then sign and share a postcard. Built at CatchOpz as the sole frontend engineer.",
+      "Holiday campaign in LINE for a global high-jewelry house: explore an illustrated map, collect jewels, then sign and share a postcard. Built at CatchOpz as the sole frontend engineer.",
     tags: ["LINE Mini-app", "Campaign Web App", "React"],
     index: "05",
-    slug: "harry-winston-winter-wonderland",
-    image: "/harry-winston-winter-wonderland.png",
+    slug: "high-jewelry-holiday-campaign",
+    image: "/high-jewelry-holiday-campaign.png",
   },
   {
     title: "AI Smart City Hackathon 2026",
@@ -149,7 +149,7 @@ type CaseStudy = {
 };
 
 const caseStudies: Record<string, CaseStudy> = {
-  panpuri: {
+  "wellness-line-campaign": {
     summary:
       "An immersive campaign for a Thai luxury wellness brand, running as a mini-app inside LINE. Players climb through six animated steps, answer three questions, and get a personalized, shareable result card.",
     runsInLine: true,
@@ -160,10 +160,9 @@ const caseStudies: Record<string, CaseStudy> = {
       "CSS 3D transforms & scroll-snap",
     ],
     year: "2024",
-    context:
-      "CatchOpz · LINE campaign for PAÑPURI, a Thai luxury fragrance & wellness brand",
+    context: "CatchOpz · LINE campaign for a Thai luxury wellness brand",
     challenge: [
-      "**PAÑPURI wanted a campaign for its Thai LINE audience that people could step into rather than scroll past.**",
+      "**A Thai luxury wellness brand wanted a campaign for its LINE audience that people could step into rather than scroll past.**",
       "Three things made it hard:",
       {
         ordered: true,
@@ -189,7 +188,7 @@ const caseStudies: Record<string, CaseStudy> = {
         ],
         media: {
           kind: "image",
-          src: "/panpuri-camera-pan.png",
+          src: "/wellness-campaign-camera-pan.png",
           alt: "Four journey steps in sequence, the illustrated background moving from warm foothills to a snowy summit with prayer flags",
           caption:
             "One illustrated background, panned upward step by step with background-position transitions: from the trailhead, through the camera viewfinder, to the prayer flags at the summit.",
@@ -204,7 +203,7 @@ const caseStudies: Record<string, CaseStudy> = {
       },
     ],
     outcome: [
-      "**The campaign launched in 2024 as a mobile-only LINE mini-app for PAÑPURI’s Thai audience.**",
+      "**The campaign launched in 2024 as a mobile-only LINE mini-app for the brand’s Thai audience.**",
       "Players sign a pledge, answer three questions and get one of three personalized result cards. From the result card, they can:",
       {
         items: [
@@ -226,12 +225,18 @@ const caseStudies: Record<string, CaseStudy> = {
     },
     demoVideoId: "FWb1u-R1MG4",
     heroScreens: [
-      { src: "/panpuri-signing.png", alt: "Signing the personal pledge" },
       {
-        src: "/panpuri-capturing.png",
+        src: "/wellness-campaign-signing.png",
+        alt: "Signing the personal pledge",
+      },
+      {
+        src: "/wellness-campaign-capturing.png",
         alt: "Capturing the view from the trail",
       },
-      { src: "/panpuri-flag-choosing.png", alt: "Choosing a prayer flag" },
+      {
+        src: "/wellness-campaign-flag-choosing.png",
+        alt: "Choosing a prayer flag",
+      },
     ],
   },
   funbike: {
@@ -338,27 +343,27 @@ const caseStudies: Record<string, CaseStudy> = {
     demoVideoId: "BnnYocMDbFU",
     demoVideoAspectRatio: "4 / 3",
   },
-  "tiffany-bvlgari-thailand": {
-    title: "Tiffany & Co. and BVLGARI Thailand LINE E-Shops",
+  "luxury-jewelry-line-eshops": {
+    title: "Luxury Jewelry LINE E-Shops, Thailand",
     summary:
-      "Two bilingual luxury jewelry stores inside LINE, built from one codebase: launched for Tiffany & Co. Thailand, then adapted for BVLGARI.",
+      "Two bilingual luxury jewelry stores inside LINE, built from one codebase: launched for one global luxury jewelry brand in Thailand, then adapted for a second.",
     runsInLine: true,
     role: "Frontend Engineer",
     stack: ["React", "LINE mini-apps (LIFF)", "Material UI"],
     year: "2024–2026",
     context:
-      "CatchOpz · Tiffany & Co. and BVLGARI Thailand LINE e-shops, commissioned by a Thai marketing agency",
+      "CatchOpz · LINE e-shops in Thailand for two global luxury jewelry brands, commissioned by a Thai marketing agency",
     challenge: [
-      "**Tiffany & Co. and BVLGARI Thailand each needed a storefront that customers could open straight from the brand’s LINE Official Account.** Customers had to browse collections, read product details and place orders without leaving the chat app, in Thai and English. Each store also had to feel like its own brand while running as a web app inside LINE’s in-app browser on iOS and Android.",
-      "The same codebase launched for Tiffany & Co. first and was then adapted for BVLGARI, on a shared internal platform (`base-shell`, `material-ui-shell`, `shopbot-kit`). Five things made it hard:",
+      "**Two global luxury jewelry brands in Thailand each needed a storefront that customers could open straight from the brand’s LINE Official Account.** Customers had to browse collections, read product details and place orders without leaving the chat app, in Thai and English. Each store also had to feel like its own brand while running as a web app inside LINE’s in-app browser on iOS and Android.",
+      "The same codebase launched for the first brand and was then adapted for the second, on a shared internal platform (`base-shell`, `material-ui-shell`, `shopbot-kit`). Five things made it hard:",
       {
         ordered: true,
         items: [
-          "**BVLGARI had to be built from the Tiffany & Co. shop without forking the platform.** The typefaces, logo, icons and palette all came from the Tiffany & Co. version.",
+          "**The second shop had to be built from the first without forking the platform.** The typefaces, logo, icons and palette all came from the first brand’s version.",
           "**Content was hardcoded, but had to change without a deploy.** Homepage sections, collections and translations were hardcoded or mocked, and they needed to come from a CMS.",
           "**Two languages meant two typefaces.** In each shop, Thai and English needed different typefaces.",
           "**LINE’s iOS WebView had its own rendering problems.** iOS WebViews showed rendering artifacts.",
-          "**Marketing needed reliable attribution.** For BVLGARI, campaigns had to be tracked across GA4, Meta and LINE Ads.",
+          "**Marketing needed reliable attribution.** For the second brand, campaigns had to be tracked across GA4, Meta and LINE Ads.",
         ],
       },
     ],
@@ -366,7 +371,7 @@ const caseStudies: Record<string, CaseStudy> = {
       {
         heading: "One codebase, two brands",
         paragraphs: [
-          "**I adapted the Tiffany & Co. shop into BVLGARI’s, and moved the codebase from mock data to live APIs so both shops run on the CMS.** I owned frontend feature work at CatchOpz on both shops, across 29 merged pull requests. For BVLGARI, I started by replacing the typefaces, logo, icons and palette.",
+          "**I adapted the first brand’s shop for the second, and moved the codebase from mock data to live APIs so both shops run on the CMS.** I owned frontend feature work at CatchOpz on both shops, across 29 merged pull requests. For the second brand, I started by replacing the typefaces, logo, icons and palette.",
           "Then I connected the landing page, collections, collection products, product tags and i18n entities to live APIs. In both shops, homepage sections and their translations now come from the backend instead of a hardcoded config file, which I removed.",
         ],
       },
@@ -374,21 +379,21 @@ const caseStudies: Record<string, CaseStudy> = {
         heading: "Two layers of translation",
         paragraphs: [
           "**Localization merges two sources, so CMS content can’t collide with UI strings.** Static locale files are the baseline. Translations fetched from the shop’s i18n-entities API are layered on top, with category and collection strings namespaced as `{entityType}_{entityId}_{key}`.",
-          "The default language comes from `liff.getLanguage()` and falls back to English for non-Thai users. In both shops, the theme’s typography then switches typeface with that language; in BVLGARI’s, between BulgariType and Noto Sans Thai.",
+          "The default language comes from `liff.getLanguage()` and falls back to English for non-Thai users. In both shops, the theme’s typography then switches typeface with that language; in the second brand’s shop, between its brand typeface and Noto Sans Thai.",
         ],
         media: {
           kind: "image",
-          src: "/bvlgari-thailand-en-th.png",
-          alt: "BVLGARI LINE e-shop home page and side menu shown in English and Thai side by side",
+          src: "/luxury-jewelry-eshop-en-th.png",
+          alt: "Luxury jewelry LINE e-shop home page and side menu shown in English and Thai side by side",
           caption:
-            "The same home page and menu in English and Thai. Switching the EN/TH toggle swaps UI strings and CMS category names, and the theme changes typeface with the language: BulgariType for English headings, Noto Sans Thai for Thai.",
+            "The same home page and menu in English and Thai. Switching the EN/TH toggle swaps UI strings and CMS category names, and the theme changes typeface with the language: the brand typeface for English headings, Noto Sans Thai for Thai.",
         },
       },
       {
         heading: "One tracking module for every platform",
         paragraphs: [
           "**I pulled all analytics into a single tracking module, so every platform reports the same funnel events.** For campaigns, I built a deeplink entry point. The landing page reads `?target=` to route users to any in-app page, keeps the remaining query params, and logs the `from` source to GA so campaign traffic can be attributed.",
-          "For BVLGARI only, I also added Meta Pixel and LINE Tag conversion events (`ViewContent`, `AddToCart`, `InitiateCheckout`, `Purchase` with THB value) through thin wrappers in the same module. They’re attached at the route level through tracker HOCs.",
+          "For the second brand only, I also added Meta Pixel and LINE Tag conversion events (`ViewContent`, `AddToCart`, `InitiateCheckout`, `Purchase` with THB value) through thin wrappers in the same module. They’re attached at the route level through tracker HOCs.",
         ],
       },
       {
@@ -400,7 +405,7 @@ const caseStudies: Record<string, CaseStudy> = {
       },
     ],
     outcome: [
-      "**I delivered two bilingual LINE mini-app storefronts from one codebase: Tiffany & Co. Thailand first, then BVLGARI.** Across both shops, the codebase has 12 routes:",
+      "**I delivered two bilingual LINE mini-app storefronts from one codebase: first for one global luxury jewelry brand, then for a second.** Across both shops, the codebase has 12 routes:",
       {
         items: [
           "home, category and collection pages",
@@ -421,18 +426,18 @@ const caseStudies: Record<string, CaseStudy> = {
     ],
     demoVideoId: "35l7bauPqb8",
   },
-  "harry-winston-winter-wonderland": {
-    title:
-      "Winston’s Winter Wonderland: a shareable holiday campaign inside LINE",
+  "high-jewelry-holiday-campaign": {
+    title: "High-Jewelry Holiday Campaign",
     summary:
       "A mobile campaign inside LINE where users finish three tasks on a treasure map, then sign and send a jewelry postcard to friends.",
     runsInLine: true,
     role: "Sole frontend engineer, with a UI/UX designer and a PM",
     stack: ["React 18 + MUI", "LINE mini-apps (LIFF)", "Firebase Hosting"],
     year: "2024",
-    context: "CatchOpz · Harry Winston (Taiwan) holiday campaign on LINE",
+    context:
+      "CatchOpz · Holiday campaign on LINE for a global high-jewelry house (Taiwan)",
     challenge: [
-      "**Harry Winston wanted a holiday campaign for its LINE Official Account that felt like a small interactive story, not a landing page.** Users enter “Winston’s Winter Wonderland”, follow a route across an illustrated map, finish three tasks to light up three jewelry pieces, and end by signing a postcard and sending it to friends in LINE. That last step brings new users back into the campaign.",
+      "**A global high-jewelry house wanted a holiday campaign for its LINE Official Account that felt like a small interactive story, not a landing page.** Users enter the campaign’s winter wonderland, follow a route across an illustrated map, finish three tasks to light up three jewelry pieces, and end by signing a postcard and sending it to friends in LINE. That last step brings new users back into the campaign.",
       "Three things made it hard:",
       {
         ordered: true,
@@ -466,7 +471,7 @@ const caseStudies: Record<string, CaseStudy> = {
         ],
         media: {
           kind: "image",
-          src: "/harry-winston-share-flow.png",
+          src: "/high-jewelry-share-flow.png",
           alt: "Share loop: the campaign’s opening page, LINE’s share target picker, and the signed postcard arriving in a friend’s chat with a button back into the campaign",
           caption:
             "The share loop: liff.shareTargetPicker sends the signed postcard as a Flex message, and its button brings the friend back to the opening page to start their own journey.",
@@ -903,7 +908,7 @@ const experience: {
     role: "Frontend Engineer",
     type: "Long-term contract",
     company: "CatchOpz",
-    note: "Martech startup building on LINE. 12+ projects for brands like Harry Winston, Tiffany & Co. and BVLGARI",
+    note: "Martech startup building on LINE. 12+ projects for global luxury and consumer brands",
     link: {
       label: "Read the Ichiban Kuji case study",
       href: "/work/ichiban-kuji-platform", // match your actual case study route
@@ -937,7 +942,11 @@ const experience: {
     role: "Frontend Engineer",
     type: "Full-time",
     company: "Environmental Resources International",
-    note: "Built the frontend of Taiwan’s Ministry of Environment Greenlife platform from scratch",
+    note: "200-person contractor building digital services for Taiwan’s Ministry of Environment",
+    link: {
+      label: "Built greenlifestyle.moenv.gov.tw",
+      href: "https://greenlifestyle.moenv.gov.tw/",
+    },
   },
 ];
 
@@ -1167,9 +1176,9 @@ function HomePage() {
             </h1>
             <p className="hero-intro hero-reveal hero-reveal--three">
               I’ve spent 6 years shipping production web apps, from Taiwan’s
-              largest e-payment platform to campaigns for Harry Winston, Tiffany
-              & Co. and BVLGARI. For the past two years, a martech startup has
-              trusted me to own the frontend of its flagship products.
+              largest e-payment platform to campaigns for global luxury jewelry
+              brands. For the past two years, a martech startup has trusted me
+              to own the frontend of its flagship products.
             </p>
             <div className="hero-actions hero-reveal hero-reveal--three">
               <a className="button button--primary" href="#work">
@@ -1305,15 +1314,15 @@ function HomePage() {
           <div className="about-grid">
             <div className="about-copy reveal">
               <p>
-                I bring in-house ownership to contract work: I take features
-                from spec to production, communicate clearly in async
-                environments, and stay accountable across time zones. Since 2024
-                I’ve worked remotely from several countries without missing a
-                beat.
+                I’m Pai, a frontend engineer based in Taipei. I studied
+                economics and moved into frontend in 2020.
               </p>
               <p>
-                Outside client work, I build AI-enabled products that help
-                people.
+                I care about the details people feel: a prize reveal that feels
+                physical, a checkout that works inside LINE. I work async-first,
+                write things down, and use Claude Code to move faster without
+                cutting corners. Since 2024, I’ve done it from several countries
+                without missing a beat.
               </p>
             </div>
             <div className="skills reveal reveal-stagger">
@@ -1376,7 +1385,7 @@ function HomePage() {
             </div>
             <a
               className="button button--outline"
-              href="/linda-pai-resume.pdf"
+              href="/pai-resume.pdf"
               download
             >
               Download resume (PDF) <span aria-hidden="true">↓</span>
@@ -1829,10 +1838,5 @@ function ProjectDetailPage() {
 export const router = createBrowserRouter([
   { path: "/", Component: HomePage },
   { path: "/work/:slug", Component: ProjectDetailPage },
-  // Briefly used while the page covered BVLGARI only.
-  {
-    path: "/work/bvlgari-thailand",
-    loader: () => redirect("/work/tiffany-bvlgari-thailand"),
-  },
   { path: "*", Component: HomePage },
 ]);

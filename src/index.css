@@ -750,15 +750,12 @@ footer a:hover {
 
 .about-copy p {
   margin: 0 0 1.5rem;
-  font-family: var(--serif);
-  max-width: 34ch;
-  font-size: clamp(1.4rem, 2vw, 1.85rem);
+  font-family: var(--sans);
+  max-width: 60ch;
+  color: var(--text);
+  font-size: clamp(1.125rem, 1.4vw, 1.25rem);
   letter-spacing: 0;
-  line-height: 1.35;
-}
-
-.about-copy p:last-child {
-  color: var(--accent);
+  line-height: 1.6;
 }
 
 .skill-group {
