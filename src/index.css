@@ -1474,8 +1474,13 @@ footer p {
   }
 
   .nav-links {
+    /* .site-header's backdrop-filter makes it the containing block for this
+       fixed panel, so inset: 0 would stop at the header; size to the viewport. */
     position: fixed;
-    inset: 0;
+    inset: 0 0 auto;
+    height: 100vh;
+    height: 100dvh;
+    overflow-y: auto;
     display: flex;
     padding: 7rem 1.5rem 3rem;
     flex-direction: column;
